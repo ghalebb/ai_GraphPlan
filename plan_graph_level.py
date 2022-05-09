@@ -59,6 +59,19 @@ class PlanGraphLevel(object):
         self.actionLayer.addAction(action) adds action to the current action layer
         """
         all_actions = PlanGraphLevel.actions
+        for action in all_actions:
+            flag = True
+            if previous_proposition_layer.all_preconds_in_layer(action):
+                for per1 in action.get_pre():
+                    for per2 in action.get_pre():
+                        if per1 == per2 or not flag:
+                            continue
+                        if previous_proposition_layer.is_mutex(per1, per2):
+                            flag = False
+                            # todo break
+
+                if flag:
+                    self.action_layer.add_action(action)
         "*** YOUR CODE HERE ***"
 
 
