@@ -163,3 +163,12 @@ def mutex_propositions(prop1, prop2, mutex_actions_list):
     prop1.get_producers() returns the set of all the possible actions in the layer that have prop1 on their add list
     """
     "*** YOUR CODE HERE ***"
+    action1 = prop1.get_producers()
+    action2 = prop2.get_producers()
+    for a1 in action1:
+        for a2 in action2:
+            if Pair(a1, a2) not in mutex_actions_list and Pair(a2, a1) not in mutex_actions_list: # todo may need only
+                # one comper
+                return False
+    return True
+
