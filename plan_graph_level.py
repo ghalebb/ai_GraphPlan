@@ -112,8 +112,7 @@ class PlanGraphLevel(object):
                 if prop not in propo_dict.keys():
                     propo_dict[prop] = Proposition(prop)
                     self.proposition_layer.add_proposition(propo_dict[prop])
-                else:
-                    propo_dict[prop].add_producer(action)
+                propo_dict[prop].add_producer(action)
         "*** YOUR CODE HERE ***"
 
     def update_mutex_proposition(self):
@@ -182,7 +181,7 @@ def have_competing_needs(a1: Action, a2: Action, mutex_props):
     "*** YOUR CODE HERE ***"
     for single_a1_pre in a1.get_pre():
         for single_a2_pre in a2.get_pre():
-            if Pair(single_a1_pre,single_a2_pre) in mutex_props:
+            if Pair(single_a1_pre, single_a2_pre) in mutex_props:
                 return True
     return False
 
