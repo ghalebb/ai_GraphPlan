@@ -89,7 +89,7 @@ class PlanGraphLevel(object):
         for a1 in current_layer_actions:
             for a2 in current_layer_actions:
                 if a1 != a2 and mutex_actions(a1, a2, previous_layer_mutex_proposition):
-                    self.action_layer.add_action(Pair(a1, a2))
+                    self.action_layer.add_mutex_actions(a1, a2)
 
     def update_proposition_layer(self):
         """
@@ -149,6 +149,7 @@ class PlanGraphLevel(object):
         self.update_action_layer(previous_proposition_layer)
         self.update_mutex_actions(previous_layer_mutex_proposition)
         self.update_proposition_layer()
+        self.update_mutex_proposition()
 
     def expand_without_mutex(self, previous_layer):
         """
@@ -181,7 +182,7 @@ def have_competing_needs(a1: Action, a2: Action, mutex_props):
     "*** YOUR CODE HERE ***"
     for single_a1_pre in a1.get_pre():
         for single_a2_pre in a2.get_pre():
-            if mutex_props(Pair(single_a1_pre, single_a2_pre)):
+            if Pair(single_a1_pre,single_a2_pre) in mutex_props:
                 return True
     return False
 

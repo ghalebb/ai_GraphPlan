@@ -249,21 +249,23 @@ def independent_pair(a1, a2: Action):
     a2_pre = a2.get_pre()
     a2_delete = a2.get_delete()
 
-    # checking inconsistent effects
+
+
+
+    # checking inconsistent
+    for single_a1_del in a1_delete:
+        if a2.is_pos_effect(single_a1_del) or a2.is_pre_cond(single_a1_del):
+            return False
+    for single_a2_del in a2_delete:
+        if a1.is_pos_effect(single_a2_del) or a1.is_pre_cond(single_a2_del):
+            return False
+
     for single_a1_pre in a1_pre:
         if a2.is_neg_effect(single_a1_pre):
             return False
 
     for single_a2_pre in a2_pre:
         if a1.is_neg_effect(single_a2_pre):
-            return False
-
-    # checking interference
-    for single_a1_del in a1_delete:
-        if a2.is_pos_effect(single_a1_del) or a2.is_pre_cond(single_a1_del):
-            return False
-    for single_a2_del in a2_delete:
-        if a1.is_pos_effect(single_a2_del) or a1.is_pre_cond(single_a2_del):
             return False
     return True
 
