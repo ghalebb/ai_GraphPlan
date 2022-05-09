@@ -60,8 +60,8 @@ class PlanGraphLevel(object):
         """
         all_actions = PlanGraphLevel.actions
         for action in all_actions:
+            flag = True
             if previous_proposition_layer.all_preconds_in_layer(action):
-                flag = True
                 for per1 in action.get_pre():
                     for per2 in action.get_pre():
                         if per1 == per2 or not flag:
@@ -140,6 +140,9 @@ class PlanGraphLevel(object):
         previous_layer_mutex_proposition = previous_proposition_layer.get_mutex_props()
 
         "*** YOUR CODE HERE ***"
+        self.update_action_layer(previous_proposition_layer)
+        self.update_mutex_actions(previous_layer_mutex_proposition)
+        self.update_proposition_layer()
 
     def expand_without_mutex(self, previous_layer):
         """
