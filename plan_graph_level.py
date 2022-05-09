@@ -74,6 +74,7 @@ class PlanGraphLevel(object):
                     self.action_layer.add_action(action)
         "*** YOUR CODE HERE ***"
 
+
     def update_mutex_actions(self, previous_layer_mutex_proposition):
         """
         Updates the mutex set in self.action_layer,
@@ -116,6 +117,10 @@ class PlanGraphLevel(object):
         current_layer_propositions = self.proposition_layer.get_propositions()
         current_layer_mutex_actions = self.action_layer.get_mutex_actions()
         "*** YOUR CODE HERE ***"
+        for p1 in current_layer_propositions:
+            for p2 in current_layer_propositions:
+                if p1 != p2 and mutex_propositions(p1, p2, current_layer_mutex_actions):
+                    self.proposition_layer.add_mutex_prop(p1, p2)
 
     def expand(self, previous_layer):
         """
@@ -180,7 +185,6 @@ def mutex_propositions(prop1, prop2, mutex_actions_list):
     action2 = prop2.get_producers()
     for a1 in action1:
         for a2 in action2:
-            if Pair(a1, a2) not in mutex_actions_list and Pair(a2, a1) not in mutex_actions_list:  # todo may need only
-                # one comper
+            if Pair(a1, a2) not in mutex_actions_list:
                 return False
     return True
