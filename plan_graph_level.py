@@ -59,6 +59,19 @@ class PlanGraphLevel(object):
         self.actionLayer.addAction(action) adds action to the current action layer
         """
         all_actions = PlanGraphLevel.actions
+        for action in all_actions:
+            flag = True
+            if previous_proposition_layer.all_preconds_in_layer(action):
+                for per1 in action.get_pre():
+                    for per2 in action.get_pre():
+                        if per1 == per2 or not flag:
+                            continue
+                        if previous_proposition_layer.is_mutex(per1, per2):
+                            flag = False
+                            # todo break
+
+                if flag:
+                    self.action_layer.add_action(action)
         "*** YOUR CODE HERE ***"
 
     def update_mutex_actions(self, previous_layer_mutex_proposition):
@@ -149,7 +162,7 @@ def have_competing_needs(a1: Action, a2: Action, mutex_props):
     "*** YOUR CODE HERE ***"
     for single_a1_pre in a1.get_pre():
         for single_a2_pre in a2.get_pre():
-            if mutex_props(Pair(single_a1_pre,single_a2_pre)):
+            if mutex_props(Pair(single_a1_pre, single_a2_pre)):
                 return True
     return False
 
@@ -167,8 +180,7 @@ def mutex_propositions(prop1, prop2, mutex_actions_list):
     action2 = prop2.get_producers()
     for a1 in action1:
         for a2 in action2:
-            if Pair(a1, a2) not in mutex_actions_list and Pair(a2, a1) not in mutex_actions_list: # todo may need only
+            if Pair(a1, a2) not in mutex_actions_list and Pair(a2, a1) not in mutex_actions_list:  # todo may need only
                 # one comper
                 return False
     return True
-
