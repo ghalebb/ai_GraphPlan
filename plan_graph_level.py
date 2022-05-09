@@ -62,7 +62,9 @@ class PlanGraphLevel(object):
         "*** YOUR CODE HERE ***"
 
 
-    def update_mutex_actions(self, previous_layer_mutex_proposition):
+
+
+    def update_mutex_actions(self, previous_layer_mutex_proposition): #Q5
         """
         Updates the mutex set in self.action_layer,
         given the mutex proposition from the previous layer.
@@ -74,6 +76,7 @@ class PlanGraphLevel(object):
         """
         current_layer_actions = self.action_layer.get_actions()
         "*** YOUR CODE HERE ***"
+
 
     def update_proposition_layer(self):
         """
