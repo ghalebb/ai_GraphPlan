@@ -69,9 +69,7 @@ class GraphPlan(object):
             self.no_goods.append([])
             level = level + 1
             pg_next = PlanGraphLevel()  # create new PlanGraph object
-            pg_next.expand(
-                self.graph[
-                    level - 1])  # calls the expand function, which you are implementing in the PlanGraph class
+            pg_next.expand(self.graph[level - 1])  # calls the expand function, which you are implementing in the PlanGraph class
             self.graph.append(pg_next)  # appending the new level to the plan graph
 
             size_no_good = len(self.no_goods[level])  # remember size of nogood table

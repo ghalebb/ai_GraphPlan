@@ -197,6 +197,7 @@ def mutex_propositions(prop1, prop2, mutex_actions_list):
     "*** YOUR CODE HERE ***"
     action1 = prop1.get_producers()
     action2 = prop2.get_producers()
+
     for a1 in action1:
         for a2 in action2:
             if Pair(a1, a2) not in mutex_actions_list:
