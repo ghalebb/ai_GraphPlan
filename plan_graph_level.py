@@ -106,7 +106,9 @@ class PlanGraphLevel(object):
 
         """
         current_layer_actions = self.action_layer.get_actions()
+
         "*** YOUR CODE HERE ***"
+
 
     def update_mutex_proposition(self):
         """
