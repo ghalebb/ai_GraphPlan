@@ -86,8 +86,8 @@ def create_pre(disk_index, from_peg, to_peg):
     others_not_on_from_peg = []
     others_not_on_to_peg = []
     for i in range(disk_index):
-        others_not_on_from_peg.append("d_" +  str(i) + "notON" +from_peg)
-        others_not_on_to_peg.append("d_"  + str(i) + "notON"+ to_peg)
+        others_not_on_from_peg.append("d_" + str(i) + "notON" + from_peg)
+        others_not_on_to_peg.append("d_" + str(i) + "notON" + to_peg)
 
     all_pres = disk_on_from_peg + others_not_on_from_peg + others_not_on_to_peg
     all_pres_string = ' '.join(all_pres)
@@ -115,8 +115,10 @@ def create_domain_file(domain_file_name, n_, m_):
                 if p0 != p1:
                     name = "Name: " + "M" + "d_" + str(disk_index) + p0 + p1 + "\n"
                     pre = "pre: " + create_pre(disk_index, p0, p1) + "\n"
-                    add = "add: " + "d_" + str(disk_index) + p1 + " " + "d_" + str(disk_index) + "notON" + p0 + "\n"
-                    delete = "delete: " + "d_" + str(disk_index) + p0 + " " + "d_" + str(disk_index) + "notON" + p1 + "\n"
+                    add = "add: " + "d_" + str(disk_index) + p1 + " " + "d_" + str(
+                        disk_index) + "notON" + p0 + "\n"
+                    delete = "delete: " + "d_" + str(disk_index) + p0 + " " + "d_" + str(
+                        disk_index) + "notON" + p1 + "\n"
                     action = name + pre + add + delete
                     domain_file.write(action)
     domain_file.close()
@@ -129,9 +131,20 @@ def create_problem_file(problem_file_name_, n_, m_):
                         'w')  # use problem_file.write(str) to write to problem_file
     "*** YOUR CODE HERE ***"
     init_lst = []
-    problem_file.write("Initial state: ")
-    for disk_index in range(n):
 
+    problem_file.write("Initial state: ")
+    for disk in disks:
+        init_lst.append(disk + pegs[0])
+        for i in range(1, m):
+            init_lst.append(disk + "notON" + pegs[i])
+    problem_file.write(' '.join(init_lst) + '\n')
+    goal_lst = []
+    for disk in disks:
+        goal_lst.append(disk + pegs[-1])
+        for i in range(m-1):
+            goal_lst.append(disk + "notON" + pegs[i])
+    problem_file.write("Goal state:  ")
+    problem_file.write(' '.join(goal_lst) + '\n')
     problem_file.close()
 
 
