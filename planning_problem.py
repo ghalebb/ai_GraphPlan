@@ -78,7 +78,7 @@ class PlanningProblem:
         return triples_list
 
     @staticmethod
-    def get_cost_of_actions( actions):
+    def get_cost_of_actions(actions):
         return len(actions)
 
     def goal_state_not_in_prop_layer(self, propositions):
@@ -118,11 +118,22 @@ def max_level(state, planning_problem):
     pg_init.set_proposition_layer(prop_layer_init)   #update the new plan graph level with the the proposition layer
     """
     "*** YOUR CODE HERE ***"
-    prop_layer_init = PropositionLayer()          #create a new proposition layer
+    prop_layer_init = PropositionLayer()  # create a new proposition layer
     for prop in state:
-        prop_layer_init.add_proposition(prop)        #update the proposition layer with the propositions of the state
-    pg_init = PlanGraphLevel()                   #create a new plan graph level (level is the action layer and the propositions layer)
-    pg_init.set_proposition_layer(prop_layer_init)   #update the new plan graph level with the the proposition layer
+        prop_layer_init.add_proposition(prop)  # update the proposition layer with the propositions of the state
+    pg_init = PlanGraphLevel()  # create a new plan graph level (level is the action layer and the propositions layer)
+    pg_init.set_proposition_layer(prop_layer_init)  # update the new plan graph level with the the proposition layer
+    level = 0
+    graph = [pg_init]
+    while not is_fixed(graph, level):
+        level += 1
+        pg_next = PlanGraphLevel()  # create new PlanGraph object
+        pg_next.expand_without_mutex(graph[level - 1])
+        graph.append(pg_next)
+
+    if planning_problem.is_goal_state(frozenset(graph)):
+        return level
+    return float('inf')
 
 
 def level_sum(state, planning_problem):
