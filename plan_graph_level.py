@@ -109,10 +109,6 @@ class PlanGraphLevel(object):
         propo_dict = dict()
         for action in current_layer_actions:
             for prop in action.get_add():
-                if prop not in propo_dict.keys():
-                    propo_dict[prop] = Proposition(prop)
-                    self.proposition_layer.add_proposition(propo_dict[prop])
-                propo_dict[prop].add_producer(action)
                 name = prop.get_name()
                 if name not in propo_dict.keys():
                     propo_dict[name] = Proposition(name)
