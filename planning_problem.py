@@ -120,6 +120,7 @@ def max_level(state, planning_problem):
     "*** YOUR CODE HERE ***"
 
 
+
 def level_sum(state, planning_problem):
     """
     The heuristic value is the sum of sub-goals level they first appeared.
