@@ -148,20 +148,21 @@ def level_sum(state, planning_problem):
     level = 0
     graph = [pg_init]
     graph_dic= {}
-    while not is_fixed(graph, level):
+    while not is_fixed(graph, level) and len(graph_dic.keys()) != len(planning_problem.goal):
         level += 1
         pg_next = PlanGraphLevel()  # create new PlanGraph object
         pg_next.expand_without_mutex(graph[level - 1])
         graph.append(pg_next)
 
         for goal in planning_problem.goal:
-            if goal in graph:
+            if goal in graph[level - 1].proposition_layer.propositions:
                 if goal not in graph_dic.keys():
-                    graph_dic[goal] = level
+                    graph_dic[goal] = level - 1
 
-
-    if planning_problem.is_goal_state(frozenset(graph)):
+    if len(graph_dic.keys()) == len(planning_problem.goal):
         return sum(graph_dic.values())
+
+
     return float('inf')
 
 
