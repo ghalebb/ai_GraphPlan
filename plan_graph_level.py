@@ -109,10 +109,6 @@ class PlanGraphLevel(object):
         propo_dict = dict()
         for action in current_layer_actions:
             for prop in action.get_add():
-                if prop not in propo_dict.keys():
-                    propo_dict[prop] = Proposition(prop)
-                    self.proposition_layer.add_proposition(propo_dict[prop])
-                propo_dict[prop].add_producer(action)
                 name = prop.get_name()
                 if name not in propo_dict.keys():
                     propo_dict[name] = Proposition(name)
@@ -162,7 +158,13 @@ class PlanGraphLevel(object):
         You don't have to use this function
         """
         previous_layer_proposition = previous_layer.get_proposition_layer()
+        # previous_layer_mutex_proposition = {}
+
         "*** YOUR CODE HERE ***"
+        self.update_action_layer(previous_layer_proposition)
+        # self.update_mutex_actions(previous_layer_mutex_proposition)
+        self.update_proposition_layer()
+        # self.update_mutex_proposition()
 
 
 def mutex_actions(a1, a2, mutex_props):
